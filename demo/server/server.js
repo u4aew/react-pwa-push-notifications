@@ -7,8 +7,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const publicKey = 'BL-_niVS6QMIuOuykFhNAJtnuaOmuYfoGYjFwrGAg4z1m3WRVXmB-LdRobGnW3kEkWBXzCEBOKe2dZS5b90IeqQ';
-const privateKey = 'wXhxwMlrzDFQiPvB_R3CzZiALUHdtcgekobHPT92rrA';
+const publicKey = 'BDZJSiMXSJUhryPkjFh_H84ZeEjVNfq5STCXVDEW4bpXye1mybGCjufRFIVmMxJN1wHOGUunGyBra0qvSa0fGJ8';
+const privateKey = 'upQsMoPu4_T6aT3a8Nwg8b7Cd3wNjQwfD5PgCYJjTmc';
 
 webPush.setVapidDetails(
     'mailto:example@yourdomain.org',
@@ -21,26 +21,25 @@ const subscriptions = [];
 
 app.post('/subscribe', (req, res) => {
     const subscription = req.body;
-    subscriptions.push(subscription); // сохраняем подписку
-    res.status(201).json({});
+    console.log(JSON.stringify(subscription), 'subscription')
 
-    // Отправляем первое уведомление сразу после подписки
-    const payload = JSON.stringify({ title: 'Web Push Test' });
-    webPush.sendNotification(subscription, payload).catch(error => {
-        console.error(error.stack);
-    });
+    subscriptions.push(subscription); // сохраняем подписку
+    return res.status(201).json({data: {success: true}});
 });
 
-// Отправка уведомлений каждые 5 минут
 setInterval(() => {
     const payload = JSON.stringify({ title: 'Periodic Web Push' });
-    console.log('test')
     subscriptions.forEach(subscription => {
+        console.log('push start')
         webPush.sendNotification(subscription, payload).catch(error => {
+            console.log('push error')
             console.error(error.stack);
+        }).then((value) => {
+            console.log(value, 'value')
+            console.log('success')
         });
     });
-}, 1 * 60 * 1000); // 5 минут в миллисекундах
+}, 1 * 10 * 1000);
 
 app.listen(3000, () => {
     console.log('Server started on port 3000');

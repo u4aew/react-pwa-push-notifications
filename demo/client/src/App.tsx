@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 
 function App() {
-    const [login, setLogin] = useState('');
-
-    const onChangeLogin = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-        setLogin(e.target.value);
-    };
-
-    useEffect(() => {
+    const onSubscribe = () => {
         if ('serviceWorker' in navigator && 'PushManager' in window) {
             navigator.serviceWorker.ready.then((registration) => {
                 if (!registration.pushManager) {
@@ -22,7 +16,7 @@ function App() {
                         return;
                     }
 
-                    const publicKey = 'BL-_niVS6QMIuOuykFhNAJtnuaOmuYfoGYjFwrGAg4z1m3WRVXmB-LdRobGnW3kEkWBXzCEBOKe2dZS5b90IeqQ';
+                    const publicKey = 'BDZJSiMXSJUhryPkjFh_H84ZeEjVNfq5STCXVDEW4bpXye1mybGCjufRFIVmMxJN1wHOGUunGyBra0qvSa0fGJ8';
                     const convertedVapidKey = urlBase64ToUint8Array(publicKey);
 
                     registration.pushManager.subscribe({
@@ -41,7 +35,6 @@ function App() {
                             if (!response.ok) {
                                 throw new Error('Bad status code from server.');
                             }
-
                             return response.json();
                         }).then((responseData) => {
                             if (!(responseData.data && responseData.data.success)) {
@@ -52,7 +45,7 @@ function App() {
                 });
             });
         }
-    }, []);
+    };
 
     // Convert the base64 public key to a UInt8Array
     function urlBase64ToUint8Array(base64String: string | any[]) {
@@ -66,13 +59,11 @@ function App() {
         return outputArray;
     }
 
-
     return (
         <div className="App">
             <main>
                 <div className="section">
-                    {/*// @ts-ignore*/}
-                    <input onInput={onChangeLogin} placeholder="login" type="text" />
+                    <button onClick={onSubscribe}>Subscribe</button>
                 </div>
             </main>
         </div>
