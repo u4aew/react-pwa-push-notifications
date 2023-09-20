@@ -14,22 +14,44 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .section {
   margin-bottom: 20px;
 }
 
+main {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  background: white;
+  color: black;
+  padding: 40px 20px;
+  border-radius: 5px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0 7px 29px 0;
+}
+
+.message {
+  max-width: 400px;
+  font-size: 16px;
+  margin: 0 auto 20px auto;
+}
+
+.qrCode {
+  background: white;
+  width: 200px;
+  justify-content: center;
+  margin: 30px auto;
+}
+
 .send {
+  margin-top: 20px;
   margin-bottom: 60px;
+  display: flex;
+  justify-content: center;
 }
 
 .title {
+  text-align: center;
   font-size: 16px;
+  margin-bottom: 10px;
   font-weight: bold;
 }
 
@@ -52,7 +74,39 @@ button {
   border: #ffffff;
   border-radius: 16px;
   cursor: pointer;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+button.tab {
+  background: white;
+  border: 3px solid #5e35b1;
+  color: #5e35b1;
+  border-radius: 0;
+  max-width: 120px;
+}
+
+button.tab.active {
+  background: #5e35b1;
+  color: white;
+}
+
+button.loading {
+  color: #5e35b1;
+  user-select: none;
+  pointer-events: none;
+}
+button.loading:before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 3px solid white;
+  border-left: 3px solid transparent;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  animation: loop .3s linear infinite;
+  transform: translate(-50%, -50%);
 }
 
 input {
@@ -60,21 +114,30 @@ input {
   padding: 10px 12px;
   box-sizing: border-box;
   border-radius: 16px;
-  border: none;
+  border: 1px solid #5e35b1;
 }
 
 button:hover {
   opacity: .8;
 }
-@keyframes App-logo-spin {
+@keyframes loop {
   from {
-    transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
 .field {
   margin-bottom: 10px;
+}
+
+.tabs {
+  justify-content: center;
+  display: flex;
+  margin-bottom: 20px;
+}
+.tab-item {
+  margin: 0 10px;
 }
