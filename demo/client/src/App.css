@@ -24,6 +24,15 @@
   margin-bottom: 20px;
 }
 
+.send {
+  margin-bottom: 60px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
 .del {
   margin-bottom: 40px;
 }
@@ -64,4 +73,8 @@ button:hover {
   to {
     transform: rotate(360deg);
   }
+}
+
+.field {
+  margin-bottom: 10px;
 }
