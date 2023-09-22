@@ -60,6 +60,9 @@ The hook provides an `Errors` enum for better error management. It includes the 
 - `ExistingSubscription`: An existing subscription is already present.
 - `Unknown`: An unknown error has occurred.
 
+## Demo
+![demo](./img/demo.jpg)
+
 ## Contributing
 
 Feel free to open issues or pull requests if you want to improve this package.
