@@ -1,10 +1,11 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import './App.css';
 import FingerprintJS from '@fingerprintjs/fingerprintjs';
-import {useSubscribe} from "./hooks/useSubscribe";
+import {useSubscribe} from "react-pwa-push-notifications";
 import toast, {Toaster} from 'react-hot-toast';
 import TextInput from "./components/Input";
 import axios from "axios";
+import Links from "./components/Links";
 import { QRCode, QRSvg } from 'sexy-qr';
 
 // in PROD use from .env
@@ -14,8 +15,8 @@ function App() {
     const [loadingSubscribe, setLoadingSubscribe] = useState<boolean>(false)
     const [loadingPush, setLoadingPush] = useState<boolean>(false)
     const [pushId, setPushId] = useState<string>('');
-    const [message, setMessage] = useState<string>('');
-    const [title, setTitle] = useState<string>('');
+    const [message, setMessage] = useState<string>('World');
+    const [title, setTitle] = useState<string>('Hello');
     const [subscribeId, setSubscribeId] = useState<string>('');
     const [showSubscribe, setShowSubscribe] = useState<boolean>(true)
 
@@ -35,22 +36,21 @@ function App() {
         return new QRSvg(qr, {
             fill: '#182026',
             cornerBlocksAsCircles: true,
-            size: 200, // px
-            radiusFactor: 0.75, // 0-1
-            cornerBlockRadiusFactor: 2, // 0-3
+            size: 200,
+            radiusFactor: 0.75,
+            cornerBlockRadiusFactor: 2,
             roundOuterCorners: true,
             roundInnerCorners: true,
-            preContent: '<!-- QR Code -->',
         }).svg
     }, [])
 
-    const getSubscribe = useSubscribe({publicKey: PUBLIC_KEY});
+    const { getSubscription } = useSubscribe({publicKey: PUBLIC_KEY});
 
     const onSubmitSubscribe = useCallback(async (e: React.FormEvent) => {
         e.preventDefault();
         setLoadingSubscribe(true)
         try {
-            const subscription = await getSubscribe();
+            const subscription = await getSubscription();
             await axios.post('/api/subscribe', {
                 subscription: subscription,
                 id: subscribeId
@@ -62,7 +62,7 @@ function App() {
         } finally {
             setLoadingSubscribe(false)
         }
-    }, [getSubscribe]);
+    }, [getSubscription]);
 
     const onSubmitPush = useCallback(async (e: React.FormEvent) => {
         e.preventDefault();
@@ -88,7 +88,10 @@ function App() {
     useEffect(() => {
         FingerprintJS.load()
             .then(fp => fp.get())
-            .then(result => setSubscribeId(result.visitorId));
+            .then(result => {
+                setSubscribeId(result.visitorId)
+                setPushId(result.visitorId)
+            });
     }, []);
 
 
@@ -132,7 +135,9 @@ function App() {
                         <button className={loadingSubscribe ? 'loading' : ''} type="submit">Send</button>
                     </form>
                 </div> }
-
+                <div>
+                    <Links />
+                </div>
             </main>
             <Toaster/>
         </div>

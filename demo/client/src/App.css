@@ -43,9 +43,22 @@ main {
 
 .send {
   margin-top: 20px;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   display: flex;
   justify-content: center;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.links-item {
+  display: block;
+  margin: 0 15px;
+}
+.links-item img {
+  width: 50px;
 }
 
 .title {
