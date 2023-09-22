@@ -1,1 +1,1 @@
-export { usePushNotifications } from '@/hooks/usePushNotifications';
+export { useSubscribe } from '@/hooks/useSubscribe';
