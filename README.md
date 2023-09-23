@@ -1,3 +1,4 @@
+[![npm version](https://badge.fury.io/js/react-hook-webauthn.svg)](https://badge.fury.io/js/react-pwa-push-notifications)
 # React hook Push Notifications
 
 ## Overview
