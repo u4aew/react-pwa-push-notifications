@@ -73,5 +73,3 @@ Feel free to open issues or pull requests if you want to improve this package.
 MIT
 
 ---
-
-This README provides an example usage and can be expanded based on additional features or requirements.
