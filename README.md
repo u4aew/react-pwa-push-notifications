@@ -5,6 +5,7 @@
 
 This package provides a custom React hook for facilitating push subscriptions in your application. It ensures proper handling of browser APIs and returns easy-to-handle errors in case of issues.
 
+![demo](./img/demo.gif)
 ## Installation
 
 ```bash
@@ -61,9 +62,6 @@ The hook provides an `Errors` enum for better error management. It includes the 
 - `ExistingSubscription`: An existing subscription is already present.
 - `Unknown`: An unknown error has occurred.
 
-## Demo
-![demo](./img/demo.jpg)
-
 ## Contributing
 
 Feel free to open issues or pull requests if you want to improve this package.
@@ -71,5 +69,3 @@ Feel free to open issues or pull requests if you want to improve this package.
 ## License
 
 MIT
-
----
