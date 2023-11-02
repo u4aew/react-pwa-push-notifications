@@ -17,14 +17,6 @@ npm install react-pwa-push-notifications
 We will be using a library for Node.js called [web-push](https://github.com/web-push-libs/web-push). This library works well with Google Cloud Messaging, a system from Google for sending notifications.
 A detailed setup process can be read in this [article](https://dev.to/u4aew/how-to-set-up-push-notifications-in-safari-on-ios-ki9).
 
-```javascript
-npm install web-push -g
-```
-
-```javascript
-web-push generate-vapid-keys
-```
-
 ```typescript
 import { useSubscribe } from "react-pwa-push-notifications";
 // Import the useSubscribe function and set the public key (PUBLIC_KEY)
