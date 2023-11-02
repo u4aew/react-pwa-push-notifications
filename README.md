@@ -12,44 +12,42 @@ This package provides a custom React hook for facilitating push subscriptions in
 npm install react-pwa-push-notifications
 ```
 
-or
-
-```bash
-yarn add react-pwa-push-notifications
-```
-
 ## Usage
 
-First, import the hook:
+We will be using a library for Node.js called [web-push](https://github.com/web-push-libs/web-push). This library works well with Google Cloud Messaging, a system from Google for sending notifications.
+A detailed setup process can be read in this [article](https://dev.to/u4aew/how-to-set-up-push-notifications-in-safari-on-ios-ki9).
 
-```typescript
-import { useSubscribe, Errors } from 'react-pwa-push-notifications';
+```javascript
+npm install web-push -g
 ```
 
-Then, initialize it with your public VAPID key:
-
-```typescript
-const { getSubscription } = useSubscribe({ publicKey: 'YOUR_PUBLIC_KEY_HERE' });
+```javascript
+web-push generate-vapid-keys
 ```
 
-Use `getSubscription` to initiate the push subscription:
-
 ```typescript
-const subscribeUser = async () => {
-  try {
-    const subscription = await getSubscription();
-    // Handle the new subscription object
-  } catch (error) {
-    if (error.errorCode === Errors.ServiceWorkerAndPushManagerNotSupported) {
-      // Handle service worker or push manager not being supported
-    } else if (error.errorCode === Errors.PushManagerUnavailable) {
-      // Handle PushManager unavailable
-    } else if (error.errorCode === Errors.ExistingSubscription) {
-      // Handle existing subscription
-    } else {
-      // Handle other errors
+import { useSubscribe } from "react-pwa-push-notifications";
+// Import the useSubscribe function and set the public key (PUBLIC_KEY)
+const { getSubscription } = useSubscribe({publicKey: PUBLIC_KEY});
+
+// Handler for subscribing to push notifications
+const onSubmitSubscribe = async (e) => {
+    try {
+        // Retrieve the subscription object using the getSubscription function
+        const subscription = await getSubscription();
+
+        // Send the subscription object and ID to the server to register the subscription
+        await axios.post('/api/subscribe', {
+            subscription: subscription,
+            id: subscribeId
+        });
+
+        // Display a message in case of successful subscription
+        console.log('Subscribe success');
+    } catch (e) {
+        // Display a warning in case of an error
+        console.warn(e);
     }
-  }
 };
 ```
 
