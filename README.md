@@ -29,10 +29,7 @@ const onSubmitSubscribe = async (e) => {
         const subscription = await getSubscription();
 
         // Send the subscription object and ID to the server to register the subscription
-        await axios.post('/api/subscribe', {
-            subscription: subscription,
-            id: subscribeId
-        });
+        await axios.post('/api/subscribe', { subscription });
 
         // Display a message in case of successful subscription
         console.log('Subscribe success');
